@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jai Gupta - Digital Solutions Architect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        /* --- ALEX MERCER STYLE PALETTE ADOPTED --- */
+                        'primary-dark-custom': '#0A0A0C',    // Deep Dark Background
+                        'secondary-dark-custom': '#1F2025',  // Card Background / Secondary Sections
+                        'accent-custom': '#06b6d4',          // Vibrant Cyan (Cyan 500)
+                        'text-light-custom': '#a0a0a0',      // Soft Gray for body text
+                        'highlight-custom': '#06b6d4',       // Cyan for highlights
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles for Background, Typography, and Transitions */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0C; /* Alex Mercer Primary Dark */
+            color: #E5E5E5; /* Light text for dark background */
+            scroll-behavior: smooth;
+        }
+        
+        /* Utility Classes from Alex Mercer's Design */
+        .accent-color-custom {
+            color: #06b6d4; /* Cyan 500 */
+        }
+        .bg-accent-custom {
+            background-color: #06b6d4; /* Cyan 500 */
+        }
+        .card-bg-custom {
+            background-color: #1F2025; /* Card Background */
+        }
+        .text-light-custom {
+            color: #a0a0a0; /* Text Gray */
+        }
+
+        /* Nav link custom effect (Header Nav) - Using new accent */
+        .nav-link::after {
+            content: '';
+            width: 0;
+            height: 3px;
+            background: #06b6d4; /* New Accent */
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after, .nav-link.active-link::after {
+            width: 100%;
+        }
+        .nav-link:hover {
+             color: #06b6d4; /* New Accent */
+        }
+
+        /* Tab link style with underline effect - Using new accent */
+        .tab-link {
+            color: #a0a0a0; /* New Text Light */
+            transition: color 0.3s, border-bottom 0.3s;
+            background: none; 
+            border: none;
+            white-space: nowrap; 
+            padding: 12px 0;
+            border-bottom: 4px solid transparent;
+            text-align: left;
+        }
+        .tab-link.active-link {
+            color: white;
+            border-bottom: 4px solid #06b6d4; /* New Accent */
+        }
+        .tab-link:hover {
+            color: white;
+        }
+        .tab-link:focus {
+            outline: none; 
+            box-shadow: none;
+        }
+
+
+        /* Service List Hover Effect - Using new accent and primary dark */
+        .service-card {
+            background-color: #1F2025; /* Use Card BG */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease-in-out;
+            border: 1px solid #1F2025; /* Initial subtle border */
+        }
+        .service-card:hover {
+            background-color: #06b6d4; /* New Accent */
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3); /* New Accent Shadow */
+            border-color: #06b6d4; /* Accent Border on hover */
+        }
+        .service-card:hover p, .service-card:hover h2, .service-card:hover a {
+            color: #0A0A0C !important; /* New Primary Dark for contrast */
+        }
+        .service-card:hover i {
+            color: #0A0A0C !important; /* New Primary Dark for contrast */
+        }
+
+        /* Work Layer Transition - Using new accent */
+        .work-item:hover .work-layer {
+            height: 100%;
+        }
+        .work-item:hover img {
+            transform: scale(1.1);
+        }
+        .work-layer {
+            background-color: #1F2025; /* Ensure base is dark */
+            background-image: linear-gradient(to top, #06b6d4, transparent); /* New Accent gradient */
+        }
+
+
+        /* Mobile Menu */
+        #sidemenu {
+            position: fixed;
+            top: 0;
+            right: -250px; 
+            background-color: #06b6d4; /* New Accent for mobile menu background */
+            height: 100vh;
+            width: 250px;
+            padding-top: 50px;
+            z-index: 50;
+            transition: right 0.5s;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        }
+        #sidemenu a {
+             /* Text color on mobile menu background */
+            color: #0A0A0C; /* Primary dark for high contrast */
+        }
+        #sidemenu .fa-xmark {
+             /* Close button color */
+            color: #0A0A0C; 
+        }
+        
+        /* Hide the mobile menu icon by default on desktop */
+        #mobile-menu-open {
+            display: none;
+            color: #06b6d4; /* Icon color */
+        }
+
+        /* Responsive adjustments for mobile menu and layout */
+        @media (max-width: 640px) {
+            #mobile-menu-open {
+                display: block;
+            }
+            .sidemenu-open {
+                right: 0px !important;
+            }
+            .tab-link {
+                font-size: 0.9rem;
+                padding: 12px 4px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-primary-dark-custom">
+    
+    <header id="header" class="w-full min-h-screen bg-cover bg-center" >
+        <div class="container mx-auto px-4 md:px-10 py-5">
+            <nav class="flex justify-between items-center flex-wrap">
+                
+                <div class="flex items-center space-x-2">
+                    <img src="./images/logo.png" alt="Codify Logo" class="h-12"> 
+                    <div class="flex flex-col">
+                        <span class="text-3xl font-bold accent-color-custom leading-tight">Codify AI</span>
+                        <span class="text-xs text-text-light-custom leading-tight mt-0">Automation. Built for Reality.</span>
+                    </div>
+                </div>
+                
+                <ul class="hidden md:flex space-x-8">
+                    <li><a href="#header" class="nav-link relative text-lg text-white hover:text-accent-custom transition duration-300">Home</a></li>
+                    <li><a href="#intro-video" class="nav-link relative text-lg text-white hover:text-accent-custom transition duration-300">Intro Video</a></li>
+                    <li><a href="#about" class="nav-link relative text-lg text-white hover:text-accent-custom transition duration-300">Expertise</a></li>
+                    <li><a href="#services" class="nav-link relative text-lg text-white hover:text-accent-custom transition duration-300">Services</a></li>
+                    <li><a href="#portfolio" class="nav-link relative text-lg text-white hover:text-accent-custom transition duration-300">Projects</a></li>
+                    <li><a href="#contact" class="nav-link relative text-lg text-white hover:text-accent-custom transition duration-300">Connect</a></li>
+                </ul>
+
+                <i id="mobile-menu-open" class="fa-solid fa-bars text-3xl cursor-pointer md:hidden" onclick="openmenu()"></i>
+
+                <ul id="sidemenu" class="flex flex-col md:hidden space-y-6 text-2xl">
+                    <i class="fa-solid fa-xmark absolute top-6 left-6 text-3xl cursor-pointer" onclick="closemenu()"></i>
+                    <li class="mt-20"><a href="#header" onclick="closemenu()" class="block px-6 text-primary-dark-custom hover:text-secondary-dark-custom transition duration-300">Home</a></li>
+                    <li><a href="#intro-video" onclick="closemenu()" class="block px-6 text-primary-dark-custom hover:text-secondary-dark-custom transition duration-300">Intro Video</a></li>
+                    <li><a href="#about" onclick="closemenu()" class="block px-6 text-primary-dark-custom hover:text-secondary-dark-custom transition duration-300">Expertise</a></li>
+                    <li><a href="#services" onclick="closemenu()" class="block px-6 text-primary-dark-custom hover:text-secondary-dark-custom transition duration-300">Services</a></li>
+                    <li><a href="#portfolio" onclick="closemenu()" class="block px-6 text-primary-dark-custom hover:text-secondary-dark-custom transition duration-300">Projects</a></li>
+                    <li><a href="#contact" onclick="closemenu()" class="block px-6 text-primary-dark-custom hover:text-secondary-dark-custom transition duration-300">Connect</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-text flex flex-col items-center justify-center text-center mt-16 md:mt-28 min-h-[50vh]"> 
+                
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold mt-4 leading-tight max-w-4xl">
+                    Digital Transformation Architect: <span class="accent-color-custom block md:inline mt-2">MERN & Intelligent Automation.</span>
+                </h1>
+                
+                <p class="text-base md:text-lg text-text-light-custom max-w-2xl mt-8 mb-12">
+                    Turning complex digital challenges into high-performance, intelligent, and scalable software solutions with a focus on **MERN, Python, and AI Agents**.
+                </p>
+
+                <a href="#contact" class="px-10 py-4 bg-accent-custom text-primary-dark-custom font-semibold text-lg rounded-full shadow-lg shadow-accent-custom/50 hover:bg-cyan-300 transition duration-300">
+                    Let's Build Together
+                </a>
+            </div>
+             </div>
+    </header>
+    
+    <section id="intro-video" class="py-16 md:py-24 bg-secondary-dark-custom">
+        <div class="container mx-auto px-4 md:px-10">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-white mb-10">
+                <span class="accent-color-custom">Watch the Intro:</span> The Vision Behind My Work
+            </h2>
+            
+            <p class="text-center text-lg text-text-light-custom max-w-4xl mx-auto mb-10 border-l-4 border-accent-custom pl-4 py-3 bg-primary-dark-custom rounded-r-xl shadow-inner italic">
+                This introductory video was entirely **AI-generated** to quickly demonstrate my focus on efficient, modern digital solutions. It showcases the high-quality, fast turnaround deliverables possible through advanced tools and workflow optimization.
+            </p>
+            <div class="max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-accent-custom">
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
+                    <video 
+                        src="./video/intro.mp4" 
+                        title="Professional Introduction Video" 
+                        controls 
+                        preload="metadata" 
+                        class="absolute top-0 left-0 w-full h-full object-cover"
+                    >
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            <p class="text-center text-text-light-custom mt-8 text-xl">
+                I'm ready to discuss how we can turn your project into an **Intelligent Digital Reality**.
+            </p>
+        </div>
+    </section>
+    
+    <section id="about" class="py-20">
+        <div class="container mx-auto px-4 md:px-10">
+            <div class="flex flex-wrap -mx-4">
+                <div class="w-full md:w-5/12 px-4 mb-8 md:mb-0">
+                    <img src="./images/port.jpeg" alt="Jai Gupta Portrait" class="w-full rounded-3xl shadow-lg"> </div>
+                <div class="w-full md:w-7/12 px-4">
+                    <h2 class="text-5xl md:text-6xl font-semibold text-white mb-6">My Core Expertise</h2>
+                    <p class="text-text-light-custom leading-relaxed mb-8">
+                        I operate as a **Digital Solutions Architect**, specializing in building intelligent, high-performance web applications and cutting-edge **AI Automation** systems. With deep expertise in the **MERN** stack, **SQL/Mongoose** databases, and advanced **Python** machine learning principles, I deliver **end-to-end digital transformation** for ambitious clients. My focus is on scalability, code quality, and exceptional user experience, ensuring **efficiency through AI tools and robust architecture**.
+                    </p>
+
+                    <div class="flex gap-2 md:gap-6 border-b border-gray-700 mb-4">
+                        <button class="tab-link text-lg md:text-xl font-bold cursor-pointer relative transition duration-200 active-link" onclick="opentab(event, 'skills')">
+                            Skills
+                        </button>
+                        <button class="tab-link text-lg md:text-xl font-bold cursor-pointer relative transition duration-200" onclick="opentab(event, 'experience')">
+                            MERN & Databases
+                        </button>
+                        <button class="tab-link text-lg md:text-xl font-bold cursor-pointer relative transition duration-200" onclick="opentab(event, 'education')">
+                            AI & Automation
+                        </button>
+                    </div>
+
+                    <div id="skills" class="tab-contents active-tab pt-4">
+                        <ul class="space-y-3 text-text-light-custom">
+                            <li><span class="accent-color-custom font-semibold block text-lg">Full-Stack Development</span>Mastery of **MERN (MongoDB, Express, React, Node.js)** for scalable web applications.</li>
+                            <li><span class="accent-color-custom font-semibold block text-lg">AI Automation & Agents</span>Custom AI Chatbot/Agent Development using **Python, Machine Learning**, and data processing.</li>
+                            <li><span class="accent-color-custom font-semibold block text-lg">Database & Data Handling</span>Proficiency in both **SQL** and **NoSQL** databases (**Mongoose/MongoDB**) for robust data management.</li>
+                        </ul>
+                    </div>
+                    <div id="experience" class="tab-contents hidden pt-4">
+                        <ul class="space-y-3 text-text-light-custom">
+                            <li><span class="accent-color-custom font-semibold block text-lg">MERN Full-Stack Proficiency</span>Expertise in **React JS, Node.js, Express.js**, and building RESTful APIs.</li>
+                            <li><span class="accent-color-custom font-semibold block text-lg">Database Management & ORMs</span>Deep knowledge of **MongoDB** and its ORM, **Mongoose**, alongside experience with traditional **SQL** databases.</li>
+                            <li><span class="accent-color-custom font-semibold block text-lg">UI/UX & Frontend Design</span>Engaging and user-centric interfaces with **HTML, CSS, JavaScript**, and modern React frameworks.</li>
+                        </ul>
+                    </div>
+                    <div id="education" class="tab-contents hidden pt-4">
+                        <ul class="space-y-3 text-text-light-custom">
+                            <li><span class="accent-color-custom font-semibold block text-lg">AI Automation & Python</span>Developing **intelligent agents and chatbots** for business process automation and customer support.</li>
+                            <li><span class="accent-color-custom font-semibold block text-lg">Machine Learning (ML) Integration</span>Leveraging **Python's ML capabilities** to add predictive and analytical features to web apps.</li>
+                            <li><span class="accent-color-custom font-semibold block text-lg">Workflow Optimization</span>Effective use of advanced **AI tools** and efficient development practices to ensure fast, high-quality delivery.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="services" class="py-20">
+        <div class="container mx-auto px-4 md:px-10">
+            <h2 class="text-5xl md:text-6xl font-semibold text-white mb-12">High-Value Digital Services</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card card-bg-custom p-8 rounded-2xl transition duration-500 ease-in-out cursor-pointer">
+                    <i class="fa-solid fa-comments text-5xl accent-color-custom mb-6"></i>
+                    <h2 class="text-3xl font-medium mb-4 text-white">Custom AI Agents & Automation</h2>
+                    <p class="text-text-light-custom text-base leading-relaxed mb-4">
+                        Deploy **Python-powered AI Chatbots/Agents** specifically designed to automate tasks, generate leads, and provide 24/7 customer support, integrating seamlessly into your web infrastructure.
+                    </p>
+                    <a href="#contact" class="accent-color-custom text-sm hover:underline font-medium">Inquire About AI Services &rarr;</a>
+                </div>
+                <div class="service-card card-bg-custom p-8 rounded-2xl transition duration-500 ease-in-out cursor-pointer">
+                    <i class="fa-solid fa-code text-5xl accent-color-custom mb-6"></i>
+                    <h2 class="text-3xl font-medium mb-4 text-white">Full-Stack MERN Application Architecture</h2>
+                    <p class="text-text-light-custom text-base leading-relaxed mb-4">
+                        End-to-end creation of secure, scalable, and high-performance web applications using **MERN (MongoDB, Express, React, Node.js)**. I architect the entire stack, from fluid UI to robust **SQL/NoSQL** APIs.
+                    </p>
+                    <a href="#contact" class="accent-color-custom text-sm hover:underline font-medium">Start an App Project &rarr;</a>
+                </div>
+                <div class="service-card card-bg-custom p-8 rounded-2xl transition duration-500 ease-in-out cursor-pointer">
+                    <i class="fa-solid fa-palette text-5xl accent-color-custom mb-6"></i>
+                    <h2 class="text-3xl font-medium mb-4 text-white">Strategic UI/UX & React Design</h2>
+                    <p class="text-text-light-custom text-base leading-relaxed mb-4">
+                        Designing user-centric interfaces, creating comprehensive design systems, and implementing them pixel-perfectly using **React JS** to guarantee an excellent, high-performance User Experience (UX).
+                    </p>
+                    <a href="https://www.behance.net/jaigupta16h" target="_blank" class="accent-color-custom text-sm hover:underline font-medium">View Design Work &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section id="portfolio" class="py-20 bg-secondary-dark-custom">
+        <div class="container mx-auto px-4 md:px-10">
+            <h2 class="text-5xl md:text-6xl font-semibold text-white mb-12">Selected Projects Portfolio</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="work-item relative rounded-2xl overflow-hidden group card-bg-custom">
+                    <img src="./images/ai.png" alt="Conversational AI Platform" class="w-full h-64 object-cover block rounded-2xl transition duration-500">
+                    <div class="work-layer absolute inset-0 bg-gradient-to-t from-accent-custom/80 to-transparent flex flex-col justify-center items-center p-8 text-center h-0 transition-all duration-500">
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Custom AI Chatbot Integration</h3>
+                        <p class="text-white text-base mb-6">
+                            A custom **Python-powered** chatbot integrated into a **Node.js/React** dashboard for real-time customer support and lead generation.
+                        </p>
+                        <a href="https://github.com/JaiGupta132" target="_blank" class="w-14 h-14 bg-white rounded-full flex items-center justify-center transition duration-300">
+                            <i class="fa-brands fa-github text-primary-dark-custom text-xl"></i> </a>
+                    </div>
+                </div>
+                
+                <div class="work-item relative rounded-2xl overflow-hidden group card-bg-custom">
+                    <img src="./images/full.png" alt="Modern SaaS Dashboard" class="w-full h-64 object-cover block rounded-2xl transition duration-500">
+                    <div class="work-layer absolute inset-0 bg-gradient-to-t from-accent-custom/80 to-transparent flex flex-col justify-center items-center p-8 text-center h-0 transition-all duration-500">
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Full-Stack MERN SaaS Solution</h3>
+                        <p class="text-white text-base mb-6">
+                            Full-stack **MERN** application for project management, featuring secure authentication and robust data handling with **Mongoose**.
+                        </p>
+                        <a href="https://github.com/JaiGupta132" target="_blank" class="w-14 h-14 bg-white rounded-full flex items-center justify-center transition duration-300">
+                            <i class="fa-brands fa-github text-primary-dark-custom text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="work-item relative rounded-2xl overflow-hidden group card-bg-custom">
+                    <img src="./images/uiux.png" alt="UI/UX Design System" class="w-full h-64 object-cover block rounded-2xl transition duration-500">
+                    <div class="work-layer absolute inset-0 bg-gradient-to-t from-accent-custom/80 to-transparent flex flex-col justify-center items-center p-8 text-center h-0 transition-all duration-500">
+                        <h3 class="text-2xl font-semibold mb-4 text-white">UI/UX Design System Case Study</h3>
+                        <p class="text-white text-base mb-6">
+                            Behance case study showcasing a comprehensive design system and user research for a Fintech app built on the **MERN** stack.
+                        </p>
+                        <a href="https://www.behance.net/jaigupta16h" target="_blank" class="w-14 h-14 bg-white rounded-full flex items-center justify-center transition duration-300">
+                            <i class="fa-brands fa-behance text-primary-dark-custom text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a href="https://github.com/JaiGupta132" target="_blank" class="block w-fit mx-auto mt-12 px-12 py-3 border border-accent-custom text-white text-lg rounded-full hover:bg-accent-custom hover:text-primary-dark-custom font-semibold transition duration-300">View All Code on GitHub</a>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-4 md:px-10">
+            <div class="flex flex-wrap -mx-4">
+                <div class="w-full md:w-5/12 px-4 mb-12 md:mb-0">
+                    <h2 class="text-5xl md:text-6xl font-semibold text-white mb-6">Connect with Jai</h2>
+                    <p class="text-text-light-custom text-lg my-6"><i class="fa-solid fa-paper-plane accent-color-custom mr-4 text-xl"></i>hello@digitaljai.com</p>
+                    <p class="text-text-light-custom text-lg mb-8"><i class="fa-solid fa-phone accent-color-custom mr-4 text-xl"></i>(Request upon contact)</p>
+                    
+                    <div class="flex space-x-6 mb-8">
+                        <a href="https://github.com/JaiGupta132" target="_blank" class="text-text-light-custom text-3xl hover:accent-color-custom transition duration-300 transform hover:-translate-y-1" title="GitHub Profile"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://www.behance.net/jaigupta16h" target="_blank" class="text-text-light-custom text-3xl hover:accent-color-custom transition duration-300 transform hover:-translate-y-1" title="Behance Portfolio"><i class="fa-brands fa-behance"></i></a>
+                        <a href="https://linkedin.com/in/jaigupta" class="text-text-light-custom text-3xl hover:accent-color-custom transition duration-300 transform hover:-translate-y-1" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" class="text-text-light-custom text-3xl hover:accent-color-custom transition duration-300 transform hover:-translate-y-1" title="Other Socials"><i class="fa-brands fa-twitter"></i></a>
+                    </div>
+                    
+                    <a href="https://placehold.co/400x500/1A1D24/ffffff?text=Professional+CV" download class="inline-block px-12 py-3 bg-accent-custom text-primary-dark-custom font-semibold text-lg rounded-full hover:bg-cyan-300 transition duration-300">Download CV/Resume</a>
+                </div>
+                <div class="w-full md:w-7/12 px-4">
+                    <form action="https://formsubmit.co/ajax/jaig29012@gmail.com" method="POST" class="space-y-4" id="contactForm">
+                        <input type="hidden" name="_subject" value="NEW PROJECT INQUIRY from Digital Solutions Site!">
+                        <input type="hidden" name="_captcha" value="false"> 
+
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <input type="text" name="Name" placeholder="Your Name or Company" required class="w-full card-bg-custom text-white p-4 text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-custom">
+                            <input type="email" name="Email" placeholder="Your Professional Email" required class="w-full card-bg-custom text-white p-4 text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-custom">
+                        </div>
+
+                        <textarea name="Project Details" rows="6" placeholder="Tell me about your project (AI Automation, MERN, or Design requirements...)" required class="w-full card-bg-custom text-white p-4 text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-custom"></textarea>
+                        
+                        <button type="submit" id="submitButton" class="px-12 py-3 bg-accent-custom text-primary-dark-custom font-semibold text-lg rounded-full hover:bg-cyan-300 transition duration-300">Start Project Inquiry</button>
+                    </form>
+                    <div id="msg" class="accent-color-custom text-lg font-bold my-4"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="w-full text-center py-6 bg-secondary-dark-custom text-text-light-custom mt-8">
+        <p class="text-sm md:text-base">
+            Copyright &copy; Jai Gupta, Digital Solutions. All Rights Reserved.
+        </p>
+    </footer>
+    
+    <script>
+        // --- JavaScript Functionality ---
+
+        // 1. Tabbed Content for About Section
+        function opentab(event, tabname) {
+            const tablinks = document.querySelectorAll(".tab-link");
+            const tabcontents = document.querySelectorAll(".tab-contents");
+
+            tablinks.forEach(link => link.classList.remove("active-link"));
+            tabcontents.forEach(content => content.classList.add("hidden"));
+            
+            event.currentTarget.classList.add("active-link");
+            document.getElementById(tabname).classList.remove("hidden");
+            document.getElementById(tabname).classList.add("active-tab");
+        }
+
+        // Initialize the first tab
+        document.addEventListener('DOMContentLoaded', () => {
+            const allTabLinks = document.querySelectorAll(".tab-link");
+            allTabLinks.forEach(link => link.classList.remove("active-link"));
+
+            const firstTabLink = document.querySelector(".tab-link");
+            const firstTabContent = document.querySelector(".tab-contents");
+            
+            if (firstTabLink) firstTabLink.classList.add("active-link");
+            if (firstTabContent) firstTabContent.classList.remove("hidden");
+            
+            handleFormSubmission();
+        });
+
+
+        // 2. Mobile Menu Functionality
+        const sidemenu = document.getElementById("sidemenu");
+        
+        function openmenu() {
+            sidemenu.classList.add("sidemenu-open");
+        }
+
+        function closemenu() {
+            sidemenu.classList.remove("sidemenu-open");
+        }
+
+        // 3. Contact Form Submission (AJAX)
+        function handleFormSubmission() {
+            const form = document.getElementById('contactForm');
+            const msg = document.getElementById('msg');
+            const submitButton = document.getElementById('submitButton');
+
+            if (form) {
+                form.addEventListener("submit", e => {
+                    e.preventDefault();
+                    
+                    submitButton.innerHTML = 'Sending...'; 
+                    submitButton.disabled = true;
+
+                    // This simulates the actual fetch call for formsubmit.co
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(data => {
+                                throw new Error(data.message || 'Form submission failed.');
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        msg.textContent = "Message Sent Successfully! Let's discuss your project.";
+                        form.reset(); 
+                        
+                        setTimeout(() => {
+                            msg.textContent = "";
+                            submitButton.innerHTML = 'Start Project Inquiry';
+                            submitButton.disabled = false;
+                        }, 5000);
+
+                    })
+                    .catch(error => {
+                        console.error('Submission Error:', error);
+                        msg.textContent = "An error occurred. Please try again later.";
+                        submitButton.innerHTML = 'Start Project Inquiry';
+                        submitButton.disabled = false;
+                        
+                        setTimeout(() => {
+                            msg.textContent = "";
+                        }, 5000);
+                    });
+                });
+            }
+        }
+    </script>
+</body>
+</html>
